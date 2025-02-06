@@ -1,0 +1,49 @@
+﻿@model AdjustInventoryViewModel
+
+<h2>商品在庫</h2>
+
+<form asp-controller="Inventory" asp-action="AdjustInventory" method="post">
+    <div>
+        <div asp-validation-summary="ModelOnly" style="color:red"></div>
+
+        <fieldset name="Products">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>商品名</th>
+                        <th>在庫数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>@product.ProductName</td>
+                            <td>@product.Quantity</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset name="Product selection">
+            <legend>商品を選択</legend>
+
+            <select asp-for="Command.ProductId" asp-items="Model.ProductsItem"></select>
+        </fieldset>
+
+        <fieldset name="Inventory adjustment">
+            <legend>在庫を調整</legend>
+
+            <label asp-for="Command.Decrease">減少</label>
+            <select asp-for="Command.Decrease" asp-items="Model.DecreaseOptions"></select>
+
+            <br />
+            <label asp-for="Command.Quantity">数量</label>
+            <input asp-for="Command.Quantity" />
+            <span asp-validation-for="Command.Quantity" style="color:red"></span>
+        </fieldset>
+
+        <button type="submit">更新</button>
+    </div>
+</form>
